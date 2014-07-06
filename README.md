@@ -22,7 +22,7 @@ start webapp in vm
 ```
 $ cd /vagrant
 $ bower install
-$ pip install -f requirements.txt
+$ sudo pip install -f requirements.txt
 $ honch start
 ```
 
