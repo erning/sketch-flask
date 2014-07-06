@@ -148,8 +148,8 @@ register_bower_component('foundation.tab.js', 'foundation/js/foundation/foundati
 register_bower_component('foundation.tooltip.js', 'foundation/js/foundation/foundation.tooltip.js')
 register_bower_component('foundation.topbar.js', 'foundation/js/foundation/foundation.topbar.js')
 
-register_bower_component('normalize.css', 'foundation/css/normalize.css')
-register_bower_component('foundation.css', 'foundation/css/foundation.css')
+# register_bower_component('normalize.css', 'foundation/css/normalize.css')
+# register_bower_component('foundation.css', 'foundation/css/foundation.css')
 
-register_asset('common.css', 'common.sass')
-register_asset('config.js')
+register_asset('global.css', 'foundation/css/normalize.css', 'foundation/css/foundation.css', 'common.sass')
+register_asset('config.js', 'config.coffee')
