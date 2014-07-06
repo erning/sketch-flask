@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+{% strip %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{%- block title %}{% endblock -%}</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
+
+  {% assets "normalize.css" %}<link href="{{ ASSET_URL }}" rel="stylesheet" media="screen">{% endassets %}
+  {% assets "foundation.css" %}<link href="{{ ASSET_URL }}" rel="stylesheet" media="screen">{% endassets %}
+
+  {% block styles %}{% endblock %}
+
+  {% assets "require.js" %}<script type="text/javascript" src="{{ ASSET_URL }}" data-main="{% block requirejs_data %}{% endblock %}"></script>{% endassets %}
+
+  <script type="text/javascript">
+    {%- block scripts %}{% endblock -%}
+  </script>
+{% endstrip %}
+</head>
+
+<body>
+{% block main %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+---
+- include: python.yml
+- include: nodejs.yml
+- include: ruby.yml
+
+- name: install cssmin
+  pip: name=cssmin
+
+- name: install honcho
+  pip: name=honcho
+
+- name: install bower
+  npm: name=bower
+       global=yes
+
+- name: install coffee-script
+  npm: name=coffee-script
+       global=yes
+
+- name: install uglify-js
+  npm: name=uglify-js
+       global=yes
+
+- name: install compass
+  gem: name=compass
+       executable={{ gem_binary }}
+       user_install=no
+       repository='https://ruby.taobao.org'

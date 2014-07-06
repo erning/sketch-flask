@@ -1,0 +1,15 @@
+---
+- name: set locale
+  template: src=locale
+            dest=/etc/default/locale
+            owner=root group=root mode=0644
+
+- name: set timezone
+  file: src=/usr/share/zoneinfo/{{ common_timezone }}
+        dest=/etc/localtime
+        state=link force=yes
+
+- name: update apt source.list
+  template: src=sources.list
+            dest=/etc/apt/sources.list
+            owner=root group=root mode=0644

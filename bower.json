@@ -1,0 +1,7 @@
+{
+    "name": "gaoshou-web",
+    "dependencies": {
+       "foundation": "~5.3.0",
+       "requirejs": "~2.1.14"
+    }
+}
