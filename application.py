@@ -40,7 +40,3 @@ class Application(Flask):
         )
 
 app = Application(__name__)
-
-# load views
-import views
-import views.index

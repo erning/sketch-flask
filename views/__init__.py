@@ -19,10 +19,10 @@ import flask.ext.assets
 
 webassets = flask.ext.assets.Environment(app)
 
-webassets.url = '%s/assets' % app.static_url_path
+# webassets.url = '%s/assets' % app.static_url_path
+webassets.url = '/assets'
 webassets.append_path(os.path.abspath('%s/../templates' % app.static_folder))
 webassets.append_path(os.path.abspath('%s/../bower_components' % app.static_folder))
-# webassets.append_path(app.static_folder)
 
 if webassets.config.get('directory'):
     app.logger.info("assets.directory: %s" % webassets.directory)
@@ -36,7 +36,8 @@ else:
 # register global assets
 #
 
-@app.route('%s/assets/<path:filename>' % app.static_url_path, endpoint='assets')
+# @app.route('%s/assets/<path:filename>' % app.static_url_path, endpoint='assets')
+@app.route('/assets/<path:filename>', endpoint='assets')
 def _send_assets_file(filename):
     cache_timeout = app.get_send_file_max_age(filename)
     return flask.helpers.send_from_directory(

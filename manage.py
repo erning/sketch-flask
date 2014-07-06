@@ -4,7 +4,11 @@ from flask.ext.script import Manager
 from flask.ext.script import Server
 from flask.ext.assets import ManageAssets
 
+# always import app from application module
 from application import app
+
+# initialize views
+import web
 
 manager = Manager(app)
 manager.add_command('runserver', Server(host='0.0.0.0'))
