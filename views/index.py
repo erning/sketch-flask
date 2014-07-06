@@ -2,8 +2,8 @@
 
 from flask import render_template
 
-from sketch import app
-from sketch.views import register_asset
+from application import app
+from views import register_asset
 
 @app.route('/')
 def index():

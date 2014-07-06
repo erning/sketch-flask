@@ -1,7 +1,9 @@
 ---
+
 - include: python.yml
 - include: nodejs.yml
 - include: ruby.yml
+- include: git.yml
 
 - name: install cssmin
   pip: name=cssmin

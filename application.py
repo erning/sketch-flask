@@ -13,7 +13,7 @@ class Application(Flask):
         # * `$(HOME)/.sketch.cfg`
         # * `/etc/sketch.cfg`
 
-        from sketch import version, default_settings
+        import version, default_settings
         self.config.from_object(version)
         self.config.from_object(default_settings)
 
@@ -40,3 +40,7 @@ class Application(Flask):
         )
 
 app = Application(__name__)
+
+# load views
+import views
+import views.index

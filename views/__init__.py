@@ -2,14 +2,14 @@
 
 import os
 
-from sketch import app
+from application import app
 
 #
 # jinja2 html compress
 #
-from sketch import jinja2htmlcompress
+import jinja2htmlcompress
 jinja2htmlcompress.enabled = app.debug and app.config['HTML_COMPRESS']
-app.jinja_env.add_extension("sketch.jinja2htmlcompress.SelectiveHTMLCompress")
+app.jinja_env.add_extension("jinja2htmlcompress.SelectiveHTMLCompress")
 
 #
 # web assets
@@ -21,7 +21,7 @@ webassets = flask.ext.assets.Environment(app)
 
 webassets.url = '%s/assets' % app.static_url_path
 webassets.append_path(os.path.abspath('%s/../templates' % app.static_folder))
-webassets.append_path(os.path.abspath('%s/../../bower_components' % app.static_folder))
+webassets.append_path(os.path.abspath('%s/../bower_components' % app.static_folder))
 # webassets.append_path(app.static_folder)
 
 if webassets.config.get('directory'):
