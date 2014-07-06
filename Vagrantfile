@@ -5,7 +5,8 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "hashicorp/precise64"
-  config.vm.network :private_network, ip: "192.168.222.2"
+  config.vm.network "forwarded_port", guest: 5000, host: 5000, auto_correct: true
+  # config.vm.network :private_network, ip: "192.168.222.2"
 
   config.vm.provision "shell",
     inline: "mkdir -p /root/.ssh/ && grep -m 1 -q vagrant /root/.ssh/authorized_keys || cp /home/vagrant/.ssh/authorized_keys /root/.ssh/"
