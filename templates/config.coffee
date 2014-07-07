@@ -1,12 +1,12 @@
 requirejs.config
   paths:
+    {% assets "modernizr.js" %}"modernizr": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
     {% assets "jquery.js" %}"jquery": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
-    # {% assets "foundation.js" %}"foundation": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
     {% assets "jquery.cookie.js" %}"jquery.cookie": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
     {% assets "jquery-placeholder.js" %}"jquery-placeholder": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
     {% assets "fastclick.js" %}"fastclick": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
-    {% assets "modernizr.js" %}"modernizr": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
 
+    {# {% assets "foundation.js" %}"foundation": "{{ ASSET_URL | replace('.js','') }}"{% endassets %}, #}
     {% assets "foundation.core.js" %}"foundation.core": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
     {% assets "foundation.abide.js" %}"foundation.abide": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
     {% assets "foundation.accordion.js" %}"foundation.accordion": "{{ ASSET_URL | replace('.js','') }}"{% endassets %},
@@ -48,8 +48,9 @@ requirejs.config
 
     "foundation.core":
       deps: [
+        "modernizr",
         "jquery",
-        "modernizr"
+        "fastclick"
       ],
       exports: "Foundation"
 

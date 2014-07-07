@@ -9,7 +9,7 @@
 {% endblock styles -%}
 {% endstrip %}
 
-{% block requirejs_data %}{% assets "index.js" %}{{ASSET_URL}}{% endassets %}{% endblock %}
+{% block entryjs %}{% assets "index.js" %}{{ASSET_URL}}{% endassets %}{% endblock %}
 
 {% strip %}
 {% block main %}

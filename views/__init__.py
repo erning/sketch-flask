@@ -43,26 +43,35 @@ def _send_assets_file(filename):
     return flask.helpers.send_from_directory(
         webassets.directory, filename, cache_timeout=cache_timeout)
 
+
 def register_asset(name, *asset_files):
     if not asset_files:
         asset_files = [name]
     bundles = []
     for asset_file in asset_files:
         _, fe = os.path.splitext(asset_file)
+
+        if fe == '.!':
+            asset_file = _
+            _, fe = os.path.splitext(asset_file)
+            allow_jinja2 = lambda x : x != 'jinja2'
+        else:
+            allow_jinja2 = lambda x : x
+
         if fe == '.js':
             bundle = flask.ext.assets.Bundle(
                 asset_file, depends=[asset_file],
-                filters=('jinja2', 'uglifyjs')
+                filters=tuple(filter(allow_jinja2, ('jinja2', 'uglifyjs')))
             )
         elif fe == '.coffee':
             bundle = flask.ext.assets.Bundle(
                 asset_file, depends=[asset_file],
-                filters=('jinja2', 'coffeescript', 'uglifyjs')
+                filters=tuple(filter(allow_jinja2, ('jinja2', 'coffeescript', 'uglifyjs')))
             )
         elif fe == '.css':
             bundle = flask.ext.assets.Bundle(
                 asset_file, depends=[asset_file],
-                filters=('jinja2', 'cssmin')
+                filters=tuple(filter(allow_jinja2, ('jinja2', 'cssmin')))
             )
         elif fe == '.sass':
             bundle = flask.ext.assets.Bundle(
@@ -83,74 +92,34 @@ def register_asset(name, *asset_files):
     webassets.register(name, *bundles, output=output)
 
 
-def register_bower_component(name, *asset_files):
-    if not asset_files:
-        asset_files = [name]
-    bundles = []
-    for asset_file in asset_files:
-        _, fe = os.path.splitext(asset_file)
-        if fe == '.js':
-            bundle = flask.ext.assets.Bundle(
-                asset_file, depends=[asset_file],
-                filters=('uglifyjs')
-            )
-        elif fe == '.coffee':
-            bundle = flask.ext.assets.Bundle(
-                asset_file, depends=[asset_file],
-                filters=('coffeescript', 'uglifyjs')
-            )
-        elif fe == '.css':
-            bundle = flask.ext.assets.Bundle(
-                asset_file, depends=[asset_file],
-                filters=('cssmin')
-            )
-        elif fe == '.sass':
-            bundle = flask.ext.assets.Bundle(
-                asset_file, depends=[asset_file, '**/*.sass', '*.sass'],
-                filters=('compass', 'cssmin')
-            )
-        elif fe == '.scss':
-            bundle = flask.ext.assets.Bundle(
-                asset_file, depends=[asset_file, '**/*.scss', '*.scss'],
-                filters=('compass', 'cssmin')
-            )
-        else:
-            raise ValueError('%s not support', asset_file)
-        bundles.append(bundle)
+# register_asset('require.js', 'requirejs/require.js.!')
+register_asset('modernizr.js', 'modernizr/modernizr.js.!')
+register_asset('jquery.js', 'jquery/dist/jquery.js.!')
+# register_asset('foundation.js', 'foundation/js/foundation.js.!')
+register_asset('jquery.cookie.js', 'jquery.cookie/jquery.cookie.js.!')
+register_asset('jquery-placeholder.js', 'jquery-placeholder/jquery.placeholder.js.!')
+register_asset('fastclick.js', 'fastclick/lib/fastclick.js.!')
 
-    fn, fe = os.path.splitext(name)
-    output = '%s.%%(version)s%s' % (fn, fe)
-    webassets.register(name, *bundles, output=output)
+register_asset('foundation.core.js', 'foundation/js/foundation/foundation.js.!')
+register_asset('foundation.abide.js', 'foundation/js/foundation/foundation.abide.js.!')
+register_asset('foundation.accordion.js', 'foundation/js/foundation/foundation.accordion.js.!')
+register_asset('foundation.alert.js', 'foundation/js/foundation/foundation.alert.js.!')
+register_asset('foundation.clearing.js', 'foundation/js/foundation/foundation.clearing.js.!')
+register_asset('foundation.dropdown.js', 'foundation/js/foundation/foundation.dropdown.js.!')
+register_asset('foundation.equalizer.js', 'foundation/js/foundation/foundation.equalizer.js.!')
+register_asset('foundation.interchange.js', 'foundation/js/foundation/foundation.interchange.js.!')
+register_asset('foundation.joyride.js', 'foundation/js/foundation/foundation.joyride.js.!')
+register_asset('foundation.magellan.js', 'foundation/js/foundation/foundation.magellan.js.!')
+register_asset('foundation.offcanvas.js', 'foundation/js/foundation/foundation.offcanvas.js.!')
+register_asset('foundation.orbit.js', 'foundation/js/foundation/foundation.orbit.js.!')
+register_asset('foundation.reveal.js', 'foundation/js/foundation/foundation.reveal.js.!')
+register_asset('foundation.slider.js', 'foundation/js/foundation/foundation.slider.js.!')
+register_asset('foundation.tab.js', 'foundation/js/foundation/foundation.tab.js.!')
+register_asset('foundation.tooltip.js', 'foundation/js/foundation/foundation.tooltip.js.!')
+register_asset('foundation.topbar.js', 'foundation/js/foundation/foundation.topbar.js.!')
 
+# register_asset('normalize.css', 'foundation/css/normalize.css.!')
+# register_asset('foundation.css', 'foundation/css/foundation.css.!')
 
-register_bower_component('require.js', 'requirejs/require.js')
-register_bower_component('modernizr.js', 'modernizr/modernizr.js')
-register_bower_component('jquery.js', 'jquery/dist/jquery.js')
-register_bower_component('foundation.js', 'foundation/js/foundation.js')
-register_bower_component('jquery.cookie.js', 'jquery.cookie/jquery.cookie.js')
-register_bower_component('jquery-placeholder.js', 'jquery-placeholder/jquery.placeholder.js')
-register_bower_component('fastclick.js', 'fastclick/lib/fastclick.js')
-
-register_bower_component('foundation.core.js', 'foundation/js/foundation/foundation.js')
-register_bower_component('foundation.abide.js', 'foundation/js/foundation/foundation.abide.js')
-register_bower_component('foundation.accordion.js', 'foundation/js/foundation/foundation.accordion.js')
-register_bower_component('foundation.alert.js', 'foundation/js/foundation/foundation.alert.js')
-register_bower_component('foundation.clearing.js', 'foundation/js/foundation/foundation.clearing.js')
-register_bower_component('foundation.dropdown.js', 'foundation/js/foundation/foundation.dropdown.js')
-register_bower_component('foundation.equalizer.js', 'foundation/js/foundation/foundation.equalizer.js')
-register_bower_component('foundation.interchange.js', 'foundation/js/foundation/foundation.interchange.js')
-register_bower_component('foundation.joyride.js', 'foundation/js/foundation/foundation.joyride.js')
-register_bower_component('foundation.magellan.js', 'foundation/js/foundation/foundation.magellan.js')
-register_bower_component('foundation.offcanvas.js', 'foundation/js/foundation/foundation.offcanvas.js')
-register_bower_component('foundation.orbit.js', 'foundation/js/foundation/foundation.orbit.js')
-register_bower_component('foundation.reveal.js', 'foundation/js/foundation/foundation.reveal.js')
-register_bower_component('foundation.slider.js', 'foundation/js/foundation/foundation.slider.js')
-register_bower_component('foundation.tab.js', 'foundation/js/foundation/foundation.tab.js')
-register_bower_component('foundation.tooltip.js', 'foundation/js/foundation/foundation.tooltip.js')
-register_bower_component('foundation.topbar.js', 'foundation/js/foundation/foundation.topbar.js')
-
-# register_bower_component('normalize.css', 'foundation/css/normalize.css')
-# register_bower_component('foundation.css', 'foundation/css/foundation.css')
-
-register_asset('global.css', 'foundation/css/normalize.css', 'foundation/css/foundation.css', 'common.sass')
-register_asset('config.js', 'config.coffee')
+register_asset('global.css', 'foundation/css/normalize.css.!', 'foundation/css/foundation.css.!', 'common.sass')
+register_asset('global.js', 'requirejs/require.js.!', 'config.coffee', 'common.coffee')
