@@ -9,5 +9,5 @@ from views import register_asset
 def index():
     return render_template('index.html')
 
-register_asset('index.css', 'common.sass', 'index.sass')
+register_asset('index.css', 'index.sass')
 register_asset('index.js', 'index.coffee')
