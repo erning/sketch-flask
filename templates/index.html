@@ -2,14 +2,13 @@
 
 {% block title %}Title{% endblock %}
 
-
 {% strip %}
 {%- block styles %}
 {% assets "index.css" %}<link href="{{ ASSET_URL }}" rel="stylesheet" media="screen">{% endassets %}
 {% endblock styles -%}
 {% endstrip %}
 
-{% block entryjs %}{% assets "index.js" %}{{ASSET_URL}}{% endassets %}{% endblock %}
+{% block mainscript %}{% assets "index.js" %}{{ ASSET_URL }}{% endassets %}{% endblock %}
 
 {% strip %}
 {% block main %}

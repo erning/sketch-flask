@@ -11,6 +11,7 @@ import jinja2htmlcompress
 jinja2htmlcompress.enabled = app.debug and app.config['HTML_COMPRESS']
 app.jinja_env.add_extension("jinja2htmlcompress.SelectiveHTMLCompress")
 
+
 #
 # web assets
 #
@@ -19,8 +20,7 @@ import flask.ext.assets
 
 webassets = flask.ext.assets.Environment(app)
 
-# webassets.url = '%s/assets' % app.static_url_path
-webassets.url = '/assets'
+webassets.url = '%s/assets' % app.config['CDN_URL_PREFIX']
 webassets.append_path(os.path.abspath('%s/../templates' % app.static_folder))
 webassets.append_path(os.path.abspath('%s/../bower_components' % app.static_folder))
 
@@ -36,7 +36,6 @@ else:
 # register global assets
 #
 
-# @app.route('%s/assets/<path:filename>' % app.static_url_path, endpoint='assets')
 @app.route('/assets/<path:filename>', endpoint='assets')
 def _send_assets_file(filename):
     cache_timeout = app.get_send_file_max_age(filename)
@@ -45,6 +44,7 @@ def _send_assets_file(filename):
 
 
 def register_asset(name, *asset_files):
+    from webassets.filter import get_filter
     if not asset_files:
         asset_files = [name]
     bundles = []
@@ -76,12 +76,12 @@ def register_asset(name, *asset_files):
         elif fe == '.sass':
             bundle = flask.ext.assets.Bundle(
                 asset_file, depends=[asset_file, '**/*.sass', '*.sass'],
-                filters=('compass', 'cssmin')
+                filters=tuple(filter(allow_jinja2, ('jinja2', 'compass', 'cssmin')))
             )
         elif fe == '.scss':
             bundle = flask.ext.assets.Bundle(
                 asset_file, depends=[asset_file, '**/*.scss', '*.scss'],
-                filters=('compass', 'cssmin')
+                filters=tuple(filter(allow_jinja2, ('jinja2', 'compass', 'cssmin')))
             )
         else:
             raise ValueError('%s not support', asset_file)
@@ -123,3 +123,22 @@ register_asset('foundation.topbar.js', 'foundation/js/foundation/foundation.topb
 
 register_asset('global.css', 'foundation/css/normalize.css.!', 'foundation/css/foundation.css.!', 'common.sass')
 register_asset('global.js', 'requirejs/require.js.!', 'config.coffee', 'common.coffee')
+
+
+#
+# url_for
+#
+
+def url_for(endpoint, **values):
+    from flask import url_for as flask_url_for
+    url = flask_url_for(endpoint, **values)
+
+    external = values.pop('_external', False)
+    if external:
+        return url
+
+    if endpoint == 'static':
+        url = "%s%s" % (app.config['CDN_URL_PREFIX'], url)
+    return url
+
+app.jinja_env.globals['url_for'] = url_for
