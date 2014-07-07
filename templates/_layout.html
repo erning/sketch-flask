@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{%- block title %}{% endblock -%}</title>
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
-  {% assets "global.css" %}<link href="{{ ASSET_URL }}" rel="stylesheet" media="screen">{% endassets %}
+  {% assets "site.css" %}<link href="{{ ASSET_URL }}" rel="stylesheet" media="screen">{% endassets %}
   {% block styles %}{% endblock %}
-  {% assets "global.js" %}<script type="text/javascript" src="{{ ASSET_URL }}" data-main="{% block mainscript %}{% endblock %}"></script>{% endassets %}
+  {% assets "app.js" %}<script type="text/javascript" src="{{ ASSET_URL }}" data-main="{% block mainscript %}{% endblock %}"></script>{% endassets %}
 {% endstrip %}
 </head>
 
