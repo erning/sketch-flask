@@ -39,7 +39,7 @@ else:
 @app.route('/assets/<path:filename>', endpoint='assets')
 def _send_assets_file(filename):
     cache_timeout = app.get_send_file_max_age(filename)
-    return flask.helpers.send_from_directory(
+    return flask.send_from_directory(
         webassets.directory, filename, cache_timeout=cache_timeout)
 
 
@@ -140,7 +140,7 @@ def url_for(endpoint, **values):
         return url
 
     if endpoint == 'static':
-        url = "%s%s" % (app.config['CDN_URL_PREFIX'], url)
+        url = app.config['CDN_URL_PREFIX'] + url
     return url
 
 app.jinja_env.globals['url_for'] = url_for
