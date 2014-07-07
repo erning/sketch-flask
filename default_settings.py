@@ -22,3 +22,7 @@ HTML_COMPRESS = False
 # Protocol-less URLs also works. for eg. CDN_URL_PREFIX = '//127.0.0.1:5000'.
 # Leave it empty string if you want to use relative URL
 CDN_URL_PREFIX = ''
+
+
+# api
+API_PREFIX = '/api'
