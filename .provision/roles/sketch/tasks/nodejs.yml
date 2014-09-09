@@ -1,22 +1,14 @@
 ---
-- name: fetch nodejs binary tarball
-  get_url: url={{ nodejs_tarball_url }}
-           dest={{ nodejs_build_root }}/{{ nodejs_tarball }}
-           sha256sum={{ nodejs_tarball_sha256sum }}
-           owner=root group=root mode=0644
-
 - name: install nodejs
-  shell: tar xf {{ nodejs_build_root }}/{{ nodejs_tarball }} -C {{ nodejs_install_dir }}
-         creates={{ nodejs_install_dir }}/{{ nodejs_binary_dir }}
+  apt: pkg={{ item }}
+       update_cache=yes
+       cache_valid_time={{ common_apt_cache_valid_time }}
+  with_items:
+    - nodejs
+    - npm
 
 - name: link node executable
   file: path=/usr/local/bin/node
-        src={{ nodejs_install_dir }}/{{ nodejs_binary_dir }}/bin/node
-        state=link
-        owner=root group=root mode=0755
-
-- name: link npm executable
-  file: path=/usr/local/bin/npm
-        src={{ nodejs_install_dir }}/{{ nodejs_binary_dir }}/bin/npm
+        src=/usr/bin/nodejs
         state=link
         owner=root group=root mode=0755

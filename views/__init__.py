@@ -121,7 +121,9 @@ register_asset('foundation.topbar.js', 'foundation/js/foundation/foundation.topb
 # register_asset('normalize.css', 'foundation/css/normalize.css.!')
 # register_asset('foundation.css', 'foundation/css/foundation.css.!')
 
-register_asset('site.css', 'foundation/css/normalize.css.!',
+register_asset('site.css', #'foundation/css/normalize.css.!',
+                           #'foundation/css/foundation.css.!',
+                           'foundation/scss/normalize.scss.!',
                            'foundation_custom.scss.!',
                            'common.sass')
 register_asset('app.js', 'requirejs/require.js.!', 'config.coffee', 'common.coffee')

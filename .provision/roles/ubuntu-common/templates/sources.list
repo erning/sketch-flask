@@ -11,10 +11,3 @@ deb-src {{ common_apt_mirror }} {{ common_release_code }}-updates main multivers
 deb-src {{ common_apt_mirror }} {{ common_release_code }}-proposed main multiverse restricted universe
 deb-src {{ common_apt_mirror }} {{ common_release_code }}-backports main multiverse restricted universe
 deb-src {{ common_apt_mirror }} {{ common_release_code }}-security main multiverse restricted universe
-
-# deb http://security.ubuntu.com/ubuntu precise-security main restricted
-# deb-src http://security.ubuntu.com/ubuntu precise-security main restricted
-# deb http://security.ubuntu.com/ubuntu precise-security universe
-# deb-src http://security.ubuntu.com/ubuntu precise-security universe
-# deb http://security.ubuntu.com/ubuntu precise-security multiverse
-# deb-src http://security.ubuntu.com/ubuntu precise-security multiverse

@@ -1,9 +1,1 @@
-
-nodejs_build_root: /root
-nodejs_tarball_url: http://nodejs.org/dist/v0.10.29/node-v0.10.29-linux-x64.tar.gz
-nodejs_tarball: node-v0.10.29-linux-x64.tar.gz
-nodejs_tarball_sha256sum: ac52da27a4e298a6de610de25b22628bdb97b78cb29d11464ef5cfa2e57847d5
-nodejs_install_dir: /opt
-nodejs_binary_dir: node-v0.10.29-linux-x64
-
-gem_binary: gem1.9.3
+pip_binary: pip3

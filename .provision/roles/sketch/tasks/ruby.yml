@@ -1,5 +1,0 @@
----
-- name: install ruby
-  apt: pkg=ruby1.9.3
-       update_cache=yes
-       cache_valid_time={{ common_apt_cache_valid_time }}

@@ -1,24 +1,8 @@
 ---
-- name: add ppa fkrull/deadsnakes
-  apt_repository: repo='ppa:fkrull/deadsnakes'
-
 - name: install python
-  apt: pkg=python3.4
+  apt: pkg={{ item }}
        update_cache=yes
        cache_valid_time={{ common_apt_cache_valid_time }}
-
-- name: link python3.4 executable
-  file: path=/usr/local/bin/python
-        src=/usr/bin/python3.4
-        state=link
-        owner=root group=root mode=0755
-
-- name: ensure pip
-  shell: /usr/bin/python3.4 -m ensurepip
-        creates=/usr/local/bin/pip3.4
-
-- name: link python3.4 executable
-  file: path=/usr/local/bin/pip
-        src=/usr/local/bin/pip3.4
-        state=link
-        owner=root group=root mode=0755
+  with_items:
+    - python3
+    - python3-pip

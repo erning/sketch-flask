@@ -1,15 +1,22 @@
 ---
+- name: install build-essential
+  apt: pkg={{ item }}
+       update_cache=yes
+       cache_valid_time={{ common_apt_cache_valid_time }}
+  with_items:
+    - build-essential
 
 - include: python.yml
 - include: nodejs.yml
-- include: ruby.yml
 - include: git.yml
 
 - name: install cssmin
   pip: name=cssmin
+       executable={{ pip_binary }}
 
 - name: install honcho
   pip: name=honcho
+       executable={{ pip_binary }}
 
 - name: install bower
   npm: name=bower
@@ -24,7 +31,6 @@
        global=yes
 
 - name: install compass
-  gem: name=compass
-       executable={{ gem_binary }}
-       user_install=no
-       repository='https://ruby.taobao.org'
+  apt: pkg=ruby-compass
+       update_cache=yes
+       cache_valid_time={{ common_apt_cache_valid_time }}
